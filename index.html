@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitose - Processo de Divisão Celular</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .phase-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .interphase { border-color: #3b82f6; }
+        .prophase { border-color: #ef4444; }
+        .metaphase { border-color: #f59e0b; }
+        .anaphase { border-color: #10b981; }
+        .telophase { border-color: #8b5cf6; }
+        .cytokinesis { border-color: #ec4899; }
+        
+        .animation-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            margin: 2rem 0;
+            background: #e2e8f0;
+        }
+        
+        .cell {
+            position: absolute;
+            border-radius: 50%;
+            background: #f1f5f9;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nucleus {
+            position: absolute;
+            border-radius: 50%;
+            background: #bfdbfe;
+        }
+        
+        .chromosome {
+            position: absolute;
+            background: #1e293b;
+        }
+        
+        .centriole {
+            position: absolute;
+            background: #64748b;
+            border-radius: 50%;
+        }
+        
+        .spindle {
+            position: absolute;
+            background: #94a3b8;
+            transform-origin: top center;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8 shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-2">Mitose</h1>
+                    <p class="text-lg md:text-xl">O Processo de Divisão Celular</p>
+                </div>
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/efa0bc98-c81e-47dd-bd13-7d2556301404.png" alt="Ilustração estilizada de uma célula em divisão mostrando cromossomos alinhados e separando-se em cores vibrantes" class="mt-4 md:mt-0 rounded-full border-4 border-white" />
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-800">O que é Mitose?</h2>
+                <p class="mb-4">A mitose é um processo de divisão celular que resulta em duas células-filhas geneticamente idênticas à célula-mãe. É fundamental para o crescimento, reparo e manutenção dos organismos multicelulares.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h3 class="text-xl font-medium mb-2 text-blue-700">Funções da Mitose</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Crescimento de organismos multicelulares</li>
+                            <li>Reparo de tecidos danificados</li>
+                            <li>Reposição de células que morrem</li>
+                            <li>Reprodução assexuada em alguns organismos</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-medium mb-2 text-blue-700">Características</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Produz células diploides (2n)</li>
+                            <li>Mantém o número de cromossomos</li>
+                            <li>Processo contínuo dividido em fases</li>
+                            <li>Ocorre em células somáticas</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="animation-container rounded-lg" id="mitosisAnimation">
+                    <!-- Animação será inserida via JavaScript -->
+                </div>
+                
+                <div class="flex justify-center mt-4">
+                    <button onclick="startAnimation()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition duration-300">
+                        Iniciar Animação
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6 text-blue-800">Fases da Mitose</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Interfase -->
+                <div class="phase-card interphase bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-600">Interfase</h3>
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9485b063-e2ec-44f6-b991-c21843f7770c.png" alt="Célula em interfase com núcleo bem definido e cromatina descondensada, fundo azul claro" class="w-full h-48 object-cover rounded mb-3" />
+                    <p class="mb-3">A célula se prepara para a divisão, replicando seu DNA e aumentando organelas. Os cromossomos não são visíveis individualmente.</p>
+                    <div class="text-sm text-gray-600">
+                        <strong>Eventos-chave:</strong> Crescimento celular, replicação do DNA, preparação para divisão.
+                    </div>
+                </div>
+                
+                <!-- Prófase -->
+                <div class="phase-card prophase bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold mb-3 text-red-600">Prófase</h3>
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/51b76c40-5717-483d-8713-55a81365a335.png" alt="Célula em prófase mostrando cromossomos condensados e envelope nuclear começando a se quebrar, fundo vermelho claro" class="w-full h-48 object-cover rounded mb-3" />
+                    <p class="mb-3">Os cromossomos se condensam e tornam-se visíveis. O nucléolo desaparece e o fuso mitótico começa a se formar.</p>
+                    <div class="text-sm text-gray-600">
+                        <strong>Eventos-chave:</strong> Condensação cromossômica, desaparecimento do nucléolo, formação do fuso.
+                    </div>
+                </div>
+                
+                <!-- Metáfase -->
+                <div class="phase-card metaphase bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold mb-3 text-yellow-600">Metáfase</h3>
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/cbda054f-e288-441d-9908-9203164d3dea.png" alt="Célula em metáfase com cromossomos alinhados no plano equatorial, fibras do fuso visíveis, fundo laranja claro" class="w-full h-48 object-cover rounded mb-3" />
+                    <p class="mb-3">Os cromossomos se alinham no plano equatorial da célula. Cada cromossomo está preso às fibras do fuso pelos centrômeros.</p>
+                    <div class="text-sm text-gray-600">
+                        <strong>Eventos-chave:</strong> Alinhamento dos cromossomos, formação completa do fuso.
+                    </div>
+                </div>
+                
+                <!-- Anáfase -->
+                <div class="phase-card anaphase bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold mb-3 text-green-600">Anáfase</h3>
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/97d17e9c-24c6-43a7-9ffd-a34edf4017d2.png" alt="Célula em anáfase com cromátides-irmãs sendo puxadas para polos opostos, fundo verde claro" class="w-full h-48 object-cover rounded mb-3" />
+                    <p class="mb-3">As cromátides-irmãs se separam e são puxadas para polos opostos da célula pelos microtúbulos do fuso.</p>
+                    <div class="text-sm text-gray-600">
+                        <strong>Eventos-chave:</strong> Separação das cromátides-irmãs, migração para os polos.
+                    </div>
+                </div>
+                
+                <!-- Telófase -->
+                <div class="phase-card telophase bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold mb-3 text-purple-600">Telófase</h3>
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1bd55bae-7479-485b-9273-0de402f6ac28.png" alt="Célula em telófase com dois núcleos se formando e início do estrangulamento, fundo roxo claro" class="w-full h-48 object-cover rounded mb-3" />
+                    <p class="mb-3">Os cromossomos chegam aos polos e começam a descondensar. Um novo envelope nuclear se forma ao redor de cada conjunto de cromossomos.</p>
+                    <div class="text-sm text-gray-600">
+                        <strong>Eventos-chave:</strong> Descondensação cromossômica, formação de núcleos.
+                    </div>
+                </div>
+                
+                <!-- Citocinese -->
+                <div class="phase-card cytokinesis bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold mb-3 text-pink-600">Citocinese</h3>
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2f4099b0-a5f1-4ef9-9df3-b4fe7aa47fcc.png" alt="Duas células-filhas quase completamente separadas com núcleos individuais visíveis, fundo rosa claro" class="w-full h-48 object-cover rounded mb-3" />
+                    <p class="mb-3">O citoplasma se divide, formando duas células-filhas idênticas. Em células animais, ocorre por estrangulamento; em vegetais, forma-se a placa celular.</p>
+                    <div class="text-sm text-gray-600">
+                        <strong>Eventos-chave:</strong> Divisão do citoplasma, formação de células-filhas.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold mb-6 text-blue-800">Comparativo: Mitose vs Meiose</h2>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="p-4 border-b">Característica</th>
+                            <th class="p-4 border-b text-blue-600">Mitose</th>
+                            <th class="p-4 border-b text-purple-600">Meiose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 border-b">Número de divisões</td>
+                            <td class="p-4 border-b">1</td>
+                            <td class="p-4 border-b">2</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 border-b">Número de células-filhas</td>
+                            <td class="p-4 border-b">2</td>
+                            <td class="p-4 border-b">4</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 border-b">Ploidia das células-filhas</td>
+                            <td class="p-4 border-b">Diploides (2n)</td>
+                            <td class="p-4 border-b">Haploides (n)</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 border-b">Variabilidade genética</td>
+                            <td class="p-4 border-b">Células idênticas</td>
+                            <td class="p-4 border-b">Células geneticamente diferentes</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 border-b">Local de ocorrência</td>
+                            <td class="p-4 border-b">Células somáticas</td>
+                            <td class="p-4 border-b">Células germinativas</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold mb-6 text-blue-800">Curiosidades sobre Mitose</h2>
+            
+            <div class="space-y-4">
+                <div class="p-4 bg-blue-50 rounded-lg">
+                    <h3 class="font-medium text-blue-700 mb-2">Velocidade da Mitose</h3>
+                    <p>O tempo que uma célula leva para completar a mitose varia conforme o tipo celular. Células de embriões podem completar o ciclo em apenas 30 minutos, enquanto células do fígado humano podem levar um ano ou mais para se dividir.</p>
+                </div>
+                
+                <div class="p-4 bg-green-50 rounded-lg">
+                    <h3 class="font-medium text-green-700 mb-2">Mitose em Plantas</h3>
+                    <p>Na citocinese de células vegetais, em vez de um sulco de clivagem, forma-se uma placa celular pelo agrupamento de vesículas do complexo de Golgi no plano equatorial. Essa placa eventualmente se transforma na parede celular primária.</p>
+                </div>
+                
+                <div class="p-4 bg-purple-50 rounded-lg">
+                    <h3 class="font-medium text-purple-700 mb-2">Erros na Mitose</h3>
+                    <p>Quando ocorrem erros durante a mitose, como a não separação dos cromossomos, podem surgir células com número anormal de cromossomos (aneuploidia), que podem levar a doenças como o câncer.</p>
+                </div>
+            </div>
+            
+            <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/bb759ac3-58dc-4b12-8dd6-b8b7e85e03b0.png" alt="Micrografia eletrônica de células de cebola em divisão mostrando diferentes estágios da mitose" class="rounded-lg" />
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fe8f992d-bd5f-4d99-b857-9345bd9b445b.png" alt="Ilustração esquemática colorida mostrando o alinhamento dos cromossomos durante a metáfase" class="rounded-lg" />
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0de7d6ec-f0ee-47d7-b131-6f63b7dab0b0.png" alt="Representação artística de uma célula animal mostrando o estrangulamento na citocinese" class="rounded-lg" />
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ee184e7a-9ed8-4954-93f4-d3644b3f4b27.png" alt="Comparação visual entre a mitose em células animais e vegetais destacando as diferenças na citocinese" class="rounded-lg" />
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-xl font-bold mb-2">Mitose - Divisão Celular</h2>
+                    <p class="text-gray-300">Um guia educativo completo sobre o processo de mitose.</p>
+                </div>
+                <div>
+                    <p class="text-gray-300 text-sm">Criado Por Samuel Victor De Souza Sousa © 2025</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function startAnimation() {
+            const container = document.getElementById('mitosisAnimation');
+            container.innerHTML = '';
+            
+            // Criar célula inicial
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.style.width = '200px';
+            cell.style.height = '200px';
+            cell.style.top = '50px';
+            cell.style.left = 'calc(50% - 100px)';
+            cell.style.transition = 'all 2s ease';
+            
+            // Criar núcleo inicial
+            const nucleus = document.createElement('div');
+            nucleus.className = 'nucleus';
+            nucleus.style.width = '120px';
+            nucleus.style.height = '120px';
+            nucleus.style.top = '40px';
+            nucleus.style.left = '40px';
+            nucleus.style.transition = 'all 2s ease';
+            
+            // Criar cromossomos (4 para simplificar)
+            const chromosomes = [];
+            for (let i = 0; i < 4; i++) {
+                const chr = document.createElement('div');
+                chr.className = 'chromosome';
+                chr.style.width = '4px';
+                chr.style.height = '25px';
+                chr.style.top = '60px';
+                chr.style.left = `${60 + i * 30}px`;
+                chr.style.transformOrigin = 'center';
+                chr.style.transition = 'all 2s ease';
+                chromosomes.push(chr);
+                nucleus.appendChild(chr);
+            }
+            
+            cell.appendChild(nucleus);
+            container.appendChild(cell);
+            
+            // Criar centríolos
+            const centriole1 = document.createElement('div');
+            centriole1.className = 'centriole';
+            centriole1.style.width = '10px';
+            centriole1.style.height = '10px';
+            centriole1.style.top = '95px';
+            centriole1.style.left = 'calc(50% - 30px)';
+            centriole1.style.transition = 'all 2s ease';
+            
+            const centriole2 = document.createElement('div');
+            centriole2.className = 'centriole';
+            centriole2.style.width = '10px';
+            centriole2.style.height = '10px';
+            centriole2.style.top = '95px';
+            centriole2.style.left = 'calc(50% + 20px)';
+            centriole2.style.transition = 'all 2s ease';
+            
+            cell.appendChild(centriole1);
+            cell.appendChild(centriole2);
+            
+            // Criar fusos (inicialmente invisíveis)
+            const spindles = [];
+            for (let i = 0; i < 4; i++) {
+                const spindle = document.createElement('div');
+                spindle.className = 'spindle';
+                spindle.style.width = '2px';
+                spindle.style.height = '0px';
+                spindle.style.top = '95px';
+                spindle.style.left = '100px';
+                spindle.style.opacity = '0';
+                spindle.style.transform = 'rotate(0deg)';
+                spindle.style.transition = 'all 2s ease';
+                spindles.push(spindle);
+                cell.appendChild(spindle);
+            }
+            
+            // Animação sequencial das fases
+            setTimeout(() => {
+                // Prófase: cromossomos condensam
+                chromosomes.forEach(chr => {
+                    chr.style.height = '40px';
+                    chr.style.width = '6px';
+                });
+                nucleus.style.backgroundColor = '#93c5fd';
+                
+                // Movimentar centríolos para polos
+                centriole1.style.left = 'calc(50% - 50px)';
+                centriole2.style.left = 'calc(50% + 40px)';
+                
+                // Mostrar fusos
+                spindles.forEach((spindle, i) => {
+                    spindle.style.opacity = '1';
+                    spindle.style.height = '50px';
+                    spindle.style.transform = `rotate(${i * 45}deg)`;
+                });
+            }, 2000);
+            
+            setTimeout(() => {
+                // Metáfase: alinhamento dos cromossomos
+                chromosomes.forEach((chr, i) => {
+                    chr.style.top = '85px';
+                    chr.style.left = `${85 + i * 10}px`;
+                });
+                
+                // Ajustar fusos para conectar aos cromossomos
+                spindles.forEach((spindle, i) => {
+                    spindle.style.height = '30px';
+                    if (i % 2 === 0) {
+                        spindle.style.transform = `rotate(45deg) translateX(20px)`;
+                    } else {
+                        spindle.style.transform = `rotate(-45deg) translateX(-20px)`;
+                    }
+                });
+            }, 4000);
+            
+            setTimeout(() => {
+                // Anáfase: separação das cromátides
+                chromosomes.forEach((chr, i) => {
+                    if (i % 2 === 0) {
+                        chr.style.top = '60px';
+                        chr.style.left = `${60 + (i/2) * 30}px`;
+                    } else {
+                        chr.style.top = '110px';
+                        chr.style.left = `${60 + Math.floor(i/2) * 30}px`;
+                    }
+                });
+                
+                // Esticar fusos
+                spindles.forEach((spindle, i) => {
+                    spindle.style.height = '60px';
+                    if (i % 2 === 0) {
+                        spindle.style.transform = `rotate(30deg) translateX(40px)`;
+                    } else {
+                        spindle.style.transform = `rotate(-30deg) translateX(-40px)`;
+                    }
+                });
+            }, 6000);
+            
+            setTimeout(() => {
+                // Telófase: formação dos núcleos
+                const cell1 = document.createElement('div');
+                cell1.className = 'cell';
+                cell1.style.width = '120px';
+                cell1.style.height = '120px';
+                cell1.style.top = '50px';
+                cell1.style.left = 'calc(50% - 150px)';
+                cell1.style.transition = 'all 2s ease';
+                
+                const cell2 = document.createElement('div');
+                cell2.className = 'cell';
+                cell2.style.width = '120px';
+                cell2.style.height = '120px';
+                cell2.style.top = '50px';
+                cell2.style.left = 'calc(50% + 30px)';
+                cell2.style.transition = 'all 2s ease';
+                
+                const nucleus1 = document.createElement('div');
+                nucleus1.className = 'nucleus';
+                nucleus1.style.width = '80px';
+                nucleus1.style.height = '80px';
+                nucleus1.style.top = '20px';
+                nucleus1.style.left = '20px';
+                
+                const nucleus2 = document.createElement('div');
+                nucleus2.className = 'nucleus';
+                nucleus2.style.width = '80px';
+                nucleus2.style.height = '80px';
+                nucleus2.style.top = '20px';
+                nucleus2.style.left = '20px';
+                
+                // Dividir cromossomos entre as células
+                for (let i = 0; i < 4; i++) {
+                    const chr = chromosomes[i];
+                    chr.style.height = '20px';
+                    chr.style.width = '4px';
+                    
+                    if (i % 2 === 0) {
+                        chr.style.top = '40px';
+                        chr.style.left = `${30 + (i/2) * 20}px`;
+                        nucleus1.appendChild(chr);
+                    } else {
+                        chr.style.top = '40px';
+                        chr.style.left = `${30 + Math.floor(i/2) * 20}px`;
+                        nucleus2.appendChild(chr);
+                    }
+                }
+                
+                cell1.appendChild(nucleus1);
+                cell2.appendChild(nucleus2);
+                
+                // Remover célula original e adicionar novas
+                container.removeChild(cell);
+                container.appendChild(cell1);
+                container.appendChild(cell2);
+                
+                // Animação de citocinese
+                setTimeout(() => {
+                    cell1.style.width = '100px';
+                    cell1.style.height = '100px';
+                    cell2.style.width = '100px';
+                    cell2.style.height = '100px';
+                }, 500);
+            }, 8000);
+        }
+        
+        // Iniciar animação quando a página carrega (opcional)
+        window.addEventListener('load', () => {
+            // startAnimation(); // Descomente esta linha para animação automática
+        });
+    </script>
+</body>
+</html>
+
